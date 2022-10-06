@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
@@ -6,34 +7,34 @@ import styles from './AccountPreview.module.scss';
 
 const cx = classNames.bind(styles);
 
-function AccountPreview() {
+function AccountPreview({ data }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
-                <img
-                    className={cx('avatar')}
-                    src="https://p16-sign-va.tiktokcdn.com/tos-useast2a-avt-0068-giso/60858e391453b6c718e36faf2228e197~c5_100x100.jpeg?x-expires=1664524800&x-signature=opcjcG%2FzhQXrZx873q4dd%2FDa1xk%3D"
-                    alt=""
-                />
+                <img className={cx('avatar')} src={data.avatar} alt={data.nickname} />
                 <Button className={cx('follow-btn')} primary small>
                     Follow
                 </Button>
             </div>
             <div className={cx('body')}>
                 <p className={cx('nickname')}>
-                    <strong>ltuyen</strong>
-                    <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />
+                    <strong>{data.nickname}</strong>
+                    {data.tick && <FontAwesomeIcon className={cx('check')} icon={faCheckCircle} />}
                 </p>
-                <p className={cx('name')}>Lương Tố Uyên</p>
+                <p className={cx('name')}>{`${data.first_name} ${data.last_name}`}</p>
                 <p className={cx('analytics')}>
-                    <strong className={cx('value')}>8.2m </strong>
+                    <strong className={cx('value')}>{data.followers_count} </strong>
                     <span className={cx('label')}>Follower</span>
-                    <strong className={cx('value')}>1.2m </strong>
+                    <strong className={cx('value')}>{data.likes_count} </strong>
                     <span className={cx('label')}>Likes</span>
                 </p>
             </div>
         </div>
     );
 }
+
+AccountPreview.propTypes = {
+    data: PropTypes.object.isRequired,
+};
 
 export default AccountPreview;
